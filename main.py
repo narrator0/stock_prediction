@@ -40,18 +40,27 @@ X_train, X_test, y_train, y_test = train_test_split(
   features, labels, test_size=0.33, random_state=42)
 
 """
+  rescale data
+"""
+from sklearn import preprocessing
+
+scaler = preprocessing.StandardScaler().fit(X_train)
+
+X_train_transformed = scaler.transform(X_train)
+
+"""
   train dataset using lasso regression
 """
 
 reg = linear_model.LinearRegression()
-reg.fit(X_train, y_train)
+reg.fit(X_train_transformed, y_train)
 
 """
   score testing set
 """
 
 # make prediction
-y_pred = reg.predict(X_test)
+y_pred = reg.predict(scaler.transform(X_test))
 
 # The coefficients
 print('Coefficients: \n', reg.coef_)
@@ -64,5 +73,5 @@ print("Mean squared error: %.2f"
 print('Variance score: %.2f' % r2_score(y_test, y_pred))
 
 # pridict the high for tomorrow
-print(reg.predict([data[0][1:]]))
+print(reg.predict(scaler.transform([data[0][1:], data[1][1:]])))
 
