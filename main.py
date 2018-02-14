@@ -1,8 +1,5 @@
 import requests
 import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn import linear_model
-from sklearn.metrics import mean_squared_error, r2_score
 
 """
   get data from api
@@ -35,6 +32,7 @@ labels   = np.asarray(labels)
 """
   spit data
 """
+from sklearn.model_selection import train_test_split
 
 X_train, X_test, y_train, y_test = train_test_split(
   features, labels, test_size=0.33, random_state=42)
@@ -51,6 +49,7 @@ X_train_transformed = scaler.transform(X_train)
 """
   train dataset using lasso regression
 """
+from sklearn import linear_model
 
 reg = linear_model.LinearRegression()
 reg.fit(X_train_transformed, y_train)
@@ -58,6 +57,7 @@ reg.fit(X_train_transformed, y_train)
 """
   score testing set
 """
+from sklearn.metrics import mean_squared_error, r2_score
 
 # make prediction
 y_pred = reg.predict(scaler.transform(X_test))
