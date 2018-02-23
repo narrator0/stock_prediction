@@ -22,9 +22,9 @@ features = []
 labels   = []
 
 for i in range(0, len(data) - 1):
-  features.append(data[i][1:])
-  labels.append(data[i + 1][2:3]) # the index of high from api is 2
- 
+  features.append(data[i + 1][1:])
+  labels.append(data[i][2:3]) # the index of high from api is 2
+
 # convert to numpy array
 features = np.asarray(features)
 labels   = np.asarray(labels)
