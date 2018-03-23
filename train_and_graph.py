@@ -8,10 +8,13 @@ pp = pprint.PrettyPrinter(indent=2)
 """
   get data from api
 """
-url = 'https://www.quandl.com/api/v3/datasets/WIKI/FB/data.json'
 
+#'https://www.quandl.com/api/v3/datasets/WIKI/FB/data.json'
+
+api_key = ""
+
+url = 'https://www.quandl.com/api/v3/datasets/WIKI/VTL/data.json?api_key={}'.format(api_key)
 res = requests.get(url)
-
 data = np.asarray(res.json()['dataset_data']['data'])
 
 """
@@ -69,9 +72,10 @@ X_train_transformed = scaler.transform(X_train)
 """
   train dataset using lasso regression
 """
-from sklearn import linear_model
 
-reg = linear_model.LinearRegression()
+from sklearn.svm import SVR
+
+reg = SVR(kernel='rbf', C=1.5e4, gamma=0.005)
 reg.fit(X_train_transformed, y_train)
 
 """
@@ -83,7 +87,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 y_pred = reg.predict(scaler.transform(X_test))
 
 # The coefficients
-print("Coefficients: \n", reg.coef_)
+#print("Coefficients: \n", reg.coef_)
 
 # The mean squared error
 print("Mean squared error: %.2f"
